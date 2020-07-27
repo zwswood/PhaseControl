@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="js/jquery-1.12.4.js"></script>
+		<script src="js/phaseCanvas@3.js"></script>
+		<title></title>
+	</head>
+	<!-- 0d2833 -->
+	<body style="background: #0d2833">
+		<div id="showContainer" style="float: left;"></div>
+		<div style="float: left; padding-left: 10px;">
+			<textarea id="txt" style="width:300px;height: 100px;" readonly="true"></textarea>
+			<button onclick="show();">输出值</button>
+			<button onclick="refresh();">刷新相位ID</button>
+			<div style="color:white">
+				<p>相位编辑控件使用说明：</p>
+				<p>创建控件 ：new PhaseCtr({[options]})</p>
+				<p>参数[options]说明：</p>
+				<p>crossShape：交叉口形状[0-水平一字,1-垂直一字,2-十字,3-东T,4-西T,5-南T,6-北T]</p>
+				<p>phaseId：相位号</p>
+				<p>usableSignal：可用信号组[1L,1S,1R,2L....]</p>
+				<p>greenSignal：绿灯信号组[1L,1S,1R...]</p>
+				<p>greenSignal：绿冲突检查信号组对</p>
+				<p>[{sKey: '1S',sValue: '1P,11P,12P,2P,21P,22P,2L,2A,3L,3S,3A,4L,4S,4A'}, {sKey: '2S',sValue: '1P,11P,12P,2P,21P,22P,1L,1A,3L,3S,3A,4L,4S,4A'}]</p>
+				<p>注意：页面上需要创建一个id为showContainer的div容器来呈现控件</p>
+				<p>PhaseCtr.greenMap为存储的绿灯信号组格式为Map：{"1P" => "007,0", "2P" => "039,0", "3P" => "071,0", "4P" => "103,0"}</p>
+				<p>相位号不会自动生成，在设置了相位号前提下，需要调用PhaseCtr.drawPhaseId()方法生成</p>
+			</div>
+		</div>
+	</body>
+</html>
+<script>
+	var p0 = new PhaseCtr({ //配置参数
+		crossShape: 2,
+		phaseId: 1,
+		usableSignal: '1L,1S,1R,1A,2L,2S,2R,2A,3L,3S,3R,3A,4L,4S,4R,4A,11P,12P,21P,22P,31P,32P,41P,42P,1P,2P,3P,4P', // 可用信号组
+		greenSignal: '11P,12P,21P,22P,31P,32P,41P,42P,1P,2P,3P,4P',
+		clashSignal: [{
+			sKey: '1S',
+			sValue: '1P,11P,12P,2P,21P,22P,2L,2A,3L,3S,3A,4L,4S,4A'
+		}, {
+			sKey: '2S',
+			sValue: '1P,11P,12P,2P,21P,22P,1L,1A,3L,3S,3A,4L,4S,4A'
+		}]
+	});
+
+	// 显示绿灯信号组
+	function show() {
+		if (p0) {
+			var str = '绿灯信号组：\n';
+			console.log(p0.greenMap);
+			p0.greenMap.forEach(function(value, key) {
+				str += "信号组:" + key + " 代码:" + value + "\n";
+			});
+			$("#txt").val(str);
+		}
+	};
+
+	$("#canvasImg").dblclick(function() {
+		if (p0) {
+			var str = '绿灯信号组：\n';
+			p0.greenMap.forEach(function(value, key) {
+				str += "信号组:" + key + " 代码:" + value + "\n";
+			});
+			$("#txt").val(str);
+		}
+	});
+
+	// 刷新相位号
+	function refresh() {
+		if (p0) {
+			p0.options.phaseId = Math.floor((Math.random() * 20) + 1);
+			p0.drawPhaseId();
+		}
+	};
+</script>

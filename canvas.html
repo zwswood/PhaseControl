@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="js/jquery-1.12.4.js"></script>
+		<script src="js/phaseCanvas.js"></script>
+		<title></title>
+	</head>
+	<body style="background: #0d2833">			
+		<div id="showContainer"></div>	
+		<div style="color:white">
+			<p>相位浏览控件使用说明：</p>
+			<p>创建控件 ：new PhaseCtr({[options]})</p>
+			<p>参数[options]说明：</p>
+			<p>phaseIndex：生成Canvas的ID号,一个页面唯一</p>
+			<p>crossShape：交叉口形状[0-水平一字,1-垂直一字,2-十字,3-东T,4-西T,5-南T,6-北T]</p>
+			<p>phaseId：相位号</p>
+			<p>usableSignal：可用信号组[1L,1S,1R,2L....]</p>
+			<p>greenSignal：绿灯信号组[1L,1S,1R...]</p>	
+			<p>注意：页面上需要创建一个id为showContainer的div容器来呈现控件</p>			
+		</div>
+	</body>
+</html>
+<script>
+	//设置当前页唯一id
+	function setIndex() {
+		var i = 0;
+		return function() {
+			return ++i;
+		}
+	};
+	var fn = setIndex();
+
+	var p0 = new PhaseCtr({ //配置参数		
+		phaseIndex: fn(),
+		crossShape: '0',
+		phaseId: 0,
+		usableSignal: '1L,1S,1R,2L,2S,2R,3L,3S,3R,4L,4S,4R,1P,2P,3P,4P,1A,2A,3A,4A,11P,12P,21P,22P,31P,32P,41P,42P', // 可用信号组
+		greenSignal: '1L,1S,1R,1A'
+	});
+
+	var p1 = new PhaseCtr({ //配置参数
+		phaseIndex: fn(),
+		crossShape: '1',
+		phaseId: 1,
+		usableSignal: '1L,1S,1R,2L,2S,2R,3L,3S,3R,4L,4S,4R,1P,2P,3P,4P,1A,2A,3A,4A', // 可用信号组
+		greenSignal: '3L,3S,3R,3A'
+	});
+
+	var p2 = new PhaseCtr({ //配置参数
+		phaseIndex: fn(),
+		crossShape: 2,
+		phaseId: 2,
+		usableSignal: '1L,1S,1R,2L,2S,2R,3L,3S,3R,4L,4S,4R,1P,2P,3P,4P,1A,2A,3A,4A', // 可用信号组
+		greenSignal: '2L,2S,2R,2A,1P,2P,3P,4P'
+	});
+
+	var p3 = new PhaseCtr({ //配置参数
+		phaseIndex: fn(),
+		crossShape: 3,
+		phaseId: 3,
+		usableSignal: '1L,1S,1R,2L,2S,2R,3L,3S,3R,4L,4S,4R,1P,2P,3P,4P,1A,2A,3A,4A', // 可用信号组
+		greenSignal: '1L,1S,1R,1A'
+	});
+
+	var p4 = new PhaseCtr({ //配置参数
+		phaseIndex: fn(),
+		crossShape: 4,
+		phaseId: 4,
+		usableSignal: '1L,1S,1R,2L,2S,2R,3L,3S,3R,4L,4S,4R,1P,2P,3P,4P,1A,2A,3A,4A', // 可用信号组
+		greenSignal: '2L,2S,2R,2A'
+	});
+
+	var p5 = new PhaseCtr({ //配置参数
+		phaseIndex: fn(),
+		crossShape: 5,
+		phaseId: 5,
+		usableSignal: '1L,1S,1R,2L,2S,2R,3L,3S,3R,4L,4S,4R,1P,2P,3P,4P,1A,2A,3A,4A', // 可用信号组
+		greenSignal: '2L,2S,2R,2A'
+	});
+
+	var p6 = new PhaseCtr({ //配置参数
+		phaseIndex: fn(),
+		crossShape: 6,
+		phaseId: 6,
+		usableSignal: '1L,1S,1R,2L,2S,2R,3L,3S,3R,4L,4S,4R,1P,2P,3P,4P,1A,2A,3A,4A', // 可用信号组
+		greenSignal: '2L,2S,2R,2A'
+	});
+
+	$("canvas").click(function() {
+		$("canvas").css('border', '3px solid #3f5c65')
+		$(this).css('border', '3px solid yellow')
+	});
+</script>
